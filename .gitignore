@@ -1,3 +1,6 @@
+# .json because we are using json5
+*.json
+
 # Logs
 logs
 *.log
@@ -35,3 +38,4 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
