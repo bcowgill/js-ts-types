@@ -1,0 +1,21 @@
+{
+	name: 'js-ts-types',
+	version: '1.0.0',
+	description: 'Javascript plus Typescript type checking library',
+	main: 'index.js',
+	scripts: {test: 'mocha'},
+	repository: {
+		type: 'git',
+		url: 'git+https://github.com/bcowgill/js-ts-types.git',
+	},
+	keywords: ['type', 'checking', 'validation'],
+	author: 'Brent S.A. Cowgill',
+	license: 'Unlicense',
+	bugs: {
+		url: 'https://github.com/bcowgill/js-ts-types/issues',
+	},
+	homepage: 'https://github.com/bcowgill/js-ts-types#readme',
+	devDependencies: {
+		typescript: '^2.2.2',
+	},
+}
