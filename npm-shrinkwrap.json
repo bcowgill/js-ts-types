@@ -1,0 +1,12 @@
+{
+  "name": "js-ts-types",
+  "version": "1.0.0",
+  "dependencies": {
+    "typescript": {
+      "version": "2.2.2",
+      "from": "typescript@latest",
+      "resolved": "https://registry.npmjs.org/typescript/-/typescript-2.2.2.tgz",
+      "dev": true
+    }
+  }
+}
