@@ -2,15 +2,16 @@
 	name: 'js-ts-types',
 	version: '1.0.0',
 	description: 'Javascript plus Typescript type checking library',
-	main: 'index.js',
+	main: './dist/index.js',
 	scripts: {
-		// npm-json5 run json5; npm test  OR JUST npm-json5 test.
-		json5: 'json5 -c package.json5 tsconfig.json5', // generate package.json from package.json5 not really necessary
+		// npm5 run json5; npm test  OR JUST npm5 test
+		json5: 'json5 -c *.json5', // generate package.json from package.json5 not really necessary
 
 		// compile typescript to javascript
-		precompile: 'json5 -c tsconfig.json5',
-		compile: 'tsc something or other',
-		postcompile: 'rm tsconfig.json',
+		precompile: 'json5 -c tsconfig*.json5',
+		compile: 'tsc --newline LF', // ./src/*.ts ./src/**/*.ts',
+		"compile:debug": 'npm-json5 run compile -- --project tsconfig-debug.json',
+		postcompile: 'rm tsconfig*.json',
 
 		pretest: 'npm-json5 run compile',
 		test: 'echo mocha test....',
@@ -19,7 +20,7 @@
 		prebuild: 'npm-json5 run test',
 		build: 'echo final build...',
 
-		clean: 'rm -rf *.json .tmp',
+		clean: 'rm -rf package.json tsconfig*.json ./.tmp/ ./dist/ ./src/*.js',
 		env: "set | grep PATH", // just to debug the environment
 	},
 	repository: {
@@ -35,7 +36,7 @@
 	homepage: 'https://github.com/bcowgill/js-ts-types#readme',
 	devDependencies: {
 		"json5": "^0.5.1",      // to convert package.json5 to package.json
-		"npm-json5": "^0.1.4",  // so that package.json doesn't need to be generated
+		"npm-json5": "^0.1.4",  // provides npm5 command so that package.json doesn't need to be generated
 		typescript: '^2.2.2',     // to convert typescript .ts files to .js
 	},
 }
