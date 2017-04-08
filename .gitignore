@@ -1,6 +1,9 @@
 # .json because we are using json5
 *.json
 
+# distribution output directory
+dist/
+
 # Logs
 logs
 *.log
