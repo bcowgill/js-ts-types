@@ -46,9 +46,11 @@
 		// npm5 run test1:debug src/testplan.test.js
 		"test1:debug": "npm-json5 run _mocha1 -- --debug --debug-brk --inspect",
 
-		"watch": "npm-json5 run _mocha -- --watch --watch-extensions=js --reporter=min",
-		// TODO get this test watcher working  ??
-		"watch-ts": 'mocha-typescript-watch',
+		// this test watcher works, if you also have the compile:watch running
+		"test:watch": "npm-json5 run _mocha -- --watch --watch-extensions=js --reporter=min",
+
+		// this test watcher will compile and run tests every time a change happens
+		"watch": "mocha-typescript-watch --opts mocha.opts './dist/{**/,}*.{test,spec}.js'",
 
 		// build will compile, test and package...
 		prebuild: 'npm-json5 run test',

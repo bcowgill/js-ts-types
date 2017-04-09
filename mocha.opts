@@ -1,0 +1,7 @@
+--growl
+--ui=bdd
+--reporter=min
+--check-leaks
+--full-trace
+--inline-diffs
+--sort
