@@ -2,6 +2,18 @@
   "name": "js-ts-types",
   "version": "1.0.0",
   "dependencies": {
+    "@types/chai": {
+      "version": "3.4.35",
+      "from": "@types/chai@latest",
+      "resolved": "https://registry.npmjs.org/@types/chai/-/chai-3.4.35.tgz",
+      "dev": true
+    },
+    "@types/mocha": {
+      "version": "2.2.40",
+      "from": "@types/mocha@latest",
+      "resolved": "https://registry.npmjs.org/@types/mocha/-/mocha-2.2.40.tgz",
+      "dev": true
+    },
     "ansi-regex": {
       "version": "2.1.1",
       "from": "ansi-regex@>=2.0.0 <3.0.0",

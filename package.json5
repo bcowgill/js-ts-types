@@ -72,6 +72,8 @@
 		typescript: '^2.2.2',   // to convert typescript .ts files to .js
 		chai: '^3.5.0',         // chai assertion library for unit testing
 		mocha: '^3.2.0',
-		'mocha-typescript': '^1.0.23',        // mocha unit test runner
+		'mocha-typescript': '^1.0.23',
+		'@types/chai': '^3.4.35',
+		'@types/mocha': '^2.2.40',        // mocha unit test runner
 	},
 }
