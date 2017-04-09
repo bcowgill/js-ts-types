@@ -5,7 +5,9 @@ import {
 	/* slow, timeout, skip, only */
 } from 'mocha-typescript'
 
-import { throwInvalid, TypeErrorInfo } from './throwInvalid'
+import ThrowInvalidFactory from './throwInvalid.factory'
+
+const testIt = ThrowInvalidFactory.callThrowInvalid
 
 @suite class ThrowInvalidTestSuite
 {
@@ -56,14 +58,6 @@ import { throwInvalid, TypeErrorInfo } from './throwInvalid'
 				name: 'Nice UI Name',
 				reason: 'thereason'
 			})).to.throw(/^Nice UI Name provided <thevalue> thereason/)
-	}
-}
-
-function testIt (params : TypeErrorInfo) // : MUSTDO type spec
-{
-	return function ()
-	{
-		return throwInvalid(params)
 	}
 }
 
