@@ -5,7 +5,7 @@ import {
 	/* slow, timeout, skip, only */
 } from 'mocha-typescript'
 
-import { throwInvalid, TypeErrorInfo }from './throw'
+import { throwInvalid, TypeErrorInfo } from './throwInvalid'
 
 @suite class ThrowInvalidTestSuite
 {
@@ -59,7 +59,7 @@ import { throwInvalid, TypeErrorInfo }from './throw'
 	}
 }
 
-function testIt (params : TypeErrorInfo)
+function testIt (params : TypeErrorInfo) // : MUSTDO type spec
 {
 	return function ()
 	{
