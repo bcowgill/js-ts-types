@@ -51,6 +51,7 @@
 
 		// this test watcher will compile and run tests every time a change happens
 		"watch": "mocha-typescript-watch --opts mocha.opts './dist/{**/,}*.{test,spec}.js'",
+		"watch1": "mocha-typescript-watch --opts mocha.opts",
 
 		// build will compile, test and package...
 		prebuild: 'npm-json5 run test',
