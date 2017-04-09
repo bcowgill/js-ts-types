@@ -14,6 +14,12 @@
 		"compile:watch": 'npm-json5 run compile -- --watch',
 		postcompile: 'rm tsconfig*.json',
 
+		// docs which helped setting up the mocha/chai/typescript configuration
+		// https://www.npmjs.com/package/mocha-typescript
+		// https://journal.artfuldev.com/write-tests-for-typescript-projects-with-mocha-and-chai-in-typescript-86e053bdb2b6
+
+		// TODO change to use a mocha.opts file ??
+
 		// default options for mocha cmd
 		"_mocha1": "mocha --growl --ui=bdd --reporter=spec \
 			--check-leaks \
@@ -41,6 +47,7 @@
 		"test1:debug": "npm-json5 run _mocha1 -- --debug --debug-brk --inspect",
 
 		"watch": "npm-json5 run _mocha -- --watch --watch-extensions=js --reporter=min",
+		// TODO get this test watcher working  ??
 		"watch-ts": 'mocha-typescript-watch',
 
 		// build will compile, test and package...
