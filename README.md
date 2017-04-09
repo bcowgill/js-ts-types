@@ -1,2 +1,2 @@
 # js-ts-types
-Javascript + Typestrict type checking library
+Javascript + Typescript type checking library tooled with mocha + chai + json5 config
