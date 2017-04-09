@@ -1,7 +1,7 @@
 {
 	name: 'js-ts-types',
 	version: '1.0.0',
-	description: 'Javascript plus Typescript type checking library',
+	description: 'Javascript plus Typescript type checking library (tooling: mocha, chai, json5)',
 	main: './dist/index.js',
 	scripts: {
 		// npm5 run json5; npm test  OR JUST npm5 test
@@ -11,10 +11,37 @@
 		precompile: 'json5 -c tsconfig*.json5',
 		compile: 'tsc --newline LF', // ./src/*.ts ./src/**/*.ts',
 		"compile:debug": 'npm-json5 run compile -- --project tsconfig-debug.json',
+		"compile:watch": 'npm-json5 run compile -- --watch',
 		postcompile: 'rm tsconfig*.json',
 
-		pretest: 'npm-json5 run compile',
-		test: 'echo mocha test....',
+		// default options for mocha cmd
+		"_mocha1": "mocha --growl --ui=bdd --reporter=spec \
+			--check-leaks \
+			--full-trace \
+			--inline-diffs \
+			--sort",
+		"_mocha": "npm-json5 run _mocha1 -- './dist/{**/,}*.{test,spec}.js'",
+
+		// npm5 run test:single
+		// npm5 run test -- -- --grep 'Array #indexOf'
+		pretest: "npm-json5 run compile",
+		"test": "npm-json5 run _mocha",
+
+		// npm5 run test1 src/testplan.test.js
+		"test1": "npm-json5 run _mocha1",
+
+		// run single test in node debugger. .exit to quit
+		// npm5 run test1:repl src/testplan.test.js
+		// https://nodejs.org/api/debugger.html
+		// next, cont, repl, list(N lines), help, quit
+		"test1:repl": "npm-json5 run _mocha1 -- debug",
+
+		// run single test and show URL to attach chrome dev tools to it.
+		// npm5 run test1:debug src/testplan.test.js
+		"test1:debug": "npm-json5 run _mocha1 -- --debug --debug-brk --inspect",
+
+		"watch": "npm-json5 run _mocha -- --watch --watch-extensions=js --reporter=min",
+		"watch-ts": 'mocha-typescript-watch',
 
 		// build will compile, test and package...
 		prebuild: 'npm-json5 run test',
@@ -27,7 +54,12 @@
 		type: 'git',
 		url: 'git+https://github.com/bcowgill/js-ts-types.git',
 	},
-	keywords: ['type-checking', 'validation', 'i18n'],
+	keywords: [
+		'type-checking',
+		'validation',
+		'typescript-mocha-chai-json5',
+		'i18n'
+	],
 	author: 'Brent S.A. Cowgill',
 	license: 'Unlicense',
 	bugs: {
@@ -37,6 +69,9 @@
 	devDependencies: {
 		"json5": "^0.5.1",      // to convert package.json5 to package.json
 		"npm-json5": "^0.1.4",  // provides npm5 command so that package.json doesn't need to be generated
-		typescript: '^2.2.2',     // to convert typescript .ts files to .js
+		typescript: '^2.2.2',   // to convert typescript .ts files to .js
+		chai: '^3.5.0',         // chai assertion library for unit testing
+		mocha: '^3.2.0',
+		'mocha-typescript': '^1.0.23',        // mocha unit test runner
 	},
 }
