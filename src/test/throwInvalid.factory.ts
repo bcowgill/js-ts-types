@@ -4,7 +4,7 @@ const ThrowInvalidFactory =
 {
 	Type: throwInvalid,
 
-	callThrowInvalid: function (params : TypeErrorInfo) // : MUSTDO type spec
+	callThrowInvalid: function (params : TypeErrorInfo) : () => never
 	{
 		return function ()
 		{

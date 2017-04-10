@@ -26,7 +26,7 @@ import aBoolean from './boolean'
 	}
 }
 
-function testIt (value: any, prop? : string, name? : string) // : MUSTDO type spec
+function testIt (value: any, prop? : string, name? : string) : () => boolean | never
 {
 	return function ()
 	{
