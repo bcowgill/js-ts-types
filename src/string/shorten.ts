@@ -6,28 +6,31 @@ const MAX_VALUE_LENGTH = 128
 export interface ShortenFn
 {
 	(string : string, length? : number) : string
-	ELLIPSIS: string
-	MAX_VALUE_LENGTH: number
+	ELLIPSIS?: string
+	MAX_VALUE_LENGTH?: number
 }
 
-export const shorten : ShortenFn = function (
-	string : string,
-	length : number = MAX_VALUE_LENGTH) : string
+export const shorten : ShortenFn = (function ()
 {
-	let shortened = string
-	if (string.length > length)
+	const shortenFn = function (
+		string : string,
+		length : number = MAX_VALUE_LENGTH) : string
 	{
-		const first_half = Math.floor(length / 2)
-		const last_half = -first_half + odd(length)
-		shortened = string.substr(START, first_half)
-			+ ELLIPSIS
-			+ string.substr(last_half)
+		let shortened = string
+		if (string.length > length)
+		{
+			const first_half = Math.floor(length / 2)
+			const last_half = -first_half + odd(length)
+			shortened = string.substr(START, first_half)
+				+ ELLIPSIS
+				+ string.substr(last_half)
+		}
+		return shortened
 	}
-	return shortened
-}
-
-//shorten.ELLIPSIS = ELLIPSIS
-//shorten.MAX_VALUE_LENGTH = MAX_VALUE_LENGTH
+	shortenFn.ELLIPSIS = ELLIPSIS
+	shortenFn.MAX_VALUE_LENGTH = MAX_VALUE_LENGTH
+	return shortenFn
+})()
 
 function odd(value : number) : number
 {
