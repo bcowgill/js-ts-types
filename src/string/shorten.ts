@@ -3,7 +3,14 @@ const START = 0
 const ELLIPSIS = '…'
 const MAX_VALUE_LENGTH = 128
 
-export function shorten(
+export interface ShortenFn
+{
+	(string : string, length? : number) : string
+	ELLIPSIS: string
+	MAX_VALUE_LENGTH: number
+}
+
+export const shorten : ShortenFn = function (
 	string : string,
 	length : number = MAX_VALUE_LENGTH) : string
 {
@@ -19,13 +26,12 @@ export function shorten(
 	return shortened
 }
 
+//shorten.ELLIPSIS = ELLIPSIS
+//shorten.MAX_VALUE_LENGTH = MAX_VALUE_LENGTH
+
 function odd(value : number) : number
 {
 	return 1 - (Math.floor(value) % 2)
 }
-
-// MUSTDO typescript syntax to add a property to a function
-//shorten.ELLIPSIS = ELLIPSIS
-//shorten.MAX_VALUE_LENGTH = MAX_VALUE_LENGTH
 
 export default shorten
