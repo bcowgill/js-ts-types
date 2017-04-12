@@ -1,4 +1,4 @@
-import shorten from './string/shorten'
+import ShortenMiddle from './string/shorten-middle'
 
 export interface TypeErrorInfo
 {
@@ -19,11 +19,12 @@ export interface TypeErrorThrower
 
 export function throwInvalid (params : TypeErrorInfo) : never
 {
+	const value = ShortenMiddle.of().shorten(params.value)
 	params.prop = params.prop || 'value'
 	params.name = params.name || params.prop
 	params.description = (params.prop === params.name)
-		? `${params.prop} provided <${typeof(params.value)}:${shorten(params.value)}> ${params.reason}`
-		: `${params.name} provided <${shorten(params.value)}> ${params.reason}`
+		? `${params.prop} provided <${typeof(params.value)}:${value}> ${params.reason}`
+		: `${params.name} provided <${value}> ${params.reason}`
 	throw new Error(params.description)
 }
 
