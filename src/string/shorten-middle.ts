@@ -26,11 +26,18 @@ export class ShortenMiddle
 
 		if (string.length > length)
 		{
-			const first_half = Math.floor(length / 2)
-			const last_half = -first_half + odd(length)
+			const length_diff = length - this.ELLIPSIS.length + 1
+			let first_half = Math.floor(length_diff / 2)
+			let last_half = first_half - odd(length_diff)
+			if (last_half > first_half)
+			{
+				let temp = last_half
+				last_half = first_half
+				first_half = temp
+			}
 			shortened = string.substr(START, first_half)
 				+ this.ELLIPSIS
-				+ string.substr(last_half)
+				+ string.substr(-last_half)
 		}
 
 		return shortened
