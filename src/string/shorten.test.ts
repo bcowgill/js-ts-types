@@ -1,10 +1,28 @@
 import 'mocha'
 import { expect } from 'chai'
 
-import Shorten from './shorten'
+import Shorteners from './shorteners'
+const Shorten = Shorteners.Shorten
 
 const ELLIPSIS = '…'
 const LONG = '01234567890123456789012345678901234567890123456789012345678901234567890f'
+
+describe('Shorteners', function () {
+	it('should have access to Shorten class', function ()
+	{
+		  expect(Shorteners.Shorten).to.exist
+	})
+
+	it('should have access to ShortenLeft class', function ()
+	{
+		  expect(Shorteners.ShortenLeft).to.exist
+	})
+
+	it('should have access to ShortenMiddle class', function ()
+	{
+		  expect(Shorteners.ShortenMiddle).to.exist
+	})
+})
 
 describe('Shorten', function () {
 	describe('constructor()', function () {
