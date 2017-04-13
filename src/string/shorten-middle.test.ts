@@ -133,11 +133,14 @@ describe('ShortenMiddle', function () {
 
 		it('should shorten with a string of characters longer than the limit', function ()
 		{
-			const testMe = ShortenMiddle.of(3, ' ... ')
-			const input = 'something too too long' + LONG + LONG
+			const length = 3
+			const testMe = ShortenMiddle.of(length, ' ... ')
+			const input = 'something too too long'
 			const result = testMe.shorten(input)
-			expect(input.length).to.be.greaterThan(128)
-			expect(result.length).to.be.equal(128)
+
+			expect(input.length).to.be.greaterThan(length)
+			expect(result).to.be.equal('sog')
+			expect(result.length).to.be.equal(length)
 		})
 	})
 
