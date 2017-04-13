@@ -1,24 +1,10 @@
 // shorten-middle.ts
 // Shorten a string by cutting out the middle
+import { IShortenString } from './ishorten'
 
 const START = 0
 const DEF_ELLIPSIS = '…'
 const MAX_VALUE_LENGTH = 128
-
-/*
-abstract class IShortenStringStatic
-{
-	abstract of (length? : number, ellipsis? : string) : IShortenString
-}
-*/
-
-export interface IShortenString
-{
-	readonly MAX_LENGTH : number
-	readonly ELLIPSIS : string
-
-	shorten (string : string, length? : number) : string
-}
 
 export class ShortenMiddle /* extends IShortenStringStatic */ implements IShortenString
 {
