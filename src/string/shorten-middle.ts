@@ -6,9 +6,9 @@ const DEF_ELLIPSIS = '…'
 const MAX_VALUE_LENGTH = 128
 
 /*
-class IShortenStringStatic
+abstract class IShortenStringStatic
 {
-	static of (length? : number, ellipsis? : string) : IShortenString {}
+	abstract of (length? : number, ellipsis? : string) : IShortenString
 }
 */
 
@@ -20,7 +20,7 @@ export interface IShortenString
 	shorten (string : string, length? : number) : string
 }
 
-export class ShortenMiddle /*extends IShortenStringStatic*/ implements IShortenString
+export class ShortenMiddle /* extends IShortenStringStatic */ implements IShortenString
 {
 	private constructor(
 		public readonly MAX_LENGTH : number = MAX_VALUE_LENGTH
