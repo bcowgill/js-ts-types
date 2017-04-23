@@ -23,7 +23,7 @@ npm5 run build
 
 exit 0
 // TODO continue testing targets here
-npm5 run cover:single -- ./src/string/shorten.test.ts
+cover one script test
 npm5 run test:watch
 npm5 run watch-mt
 npm5 run watch-mt1
