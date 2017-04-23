@@ -9,7 +9,7 @@
 	},
 	"scripts": {
 		// npm5 run json5; npm test  OR JUST npm5 test
-		"json5": "json5 -c *.json5 && ./scripts/entab-json.sh", // generate package.json from package.json5 not really necessary
+		"json5": "json5 -c *.json5",// && ./scripts/entab-json.sh", // generate package.json from package.json5 not really necessary
 
 		// adding new modules and mainting the shrinkwrap
 		"addmodule": "npm install --save",
@@ -68,18 +68,18 @@
 		"pretestfix": "npm-json5 run compilefix",
 		"testfix": "npm-json5 run _mocha",
 
-		// npm5 run test1 -- ./dist/testplan.test.js
-		"test1": "npm-json5 run _mocha1",
+		// npm5 run test:single -- ./dist/testplan.test.js
+		"test:single": "npm-json5 run _mocha1",
 
 		// run single test in node debugger. .exit to quit
-		// npm5 run test1:repl -- ./dist/testplan.test.js
+		// npm5 run test:single:repl -- ./dist/testplan.test.js
 		// "https"://nodejs.org/api/debugger.html
 		// next, cont, repl, list(N lines), help, quit
-		"test1:repl": "npm-json5 run _mocha1 -- debug",
+		"test:single:repl": "npm-json5 run _mocha1 -- debug",
 
 		// run single test and show URL to attach chrome dev tools to it.
-		// npm5 run test1:debug -- ./dist/testplan.test.js
-		"test1:debug": "npm-json5 run _mocha1 \
+		// npm5 run test:single:debug -- ./dist/testplan.test.js
+		"test:single:debug": "npm-json5 run _mocha1 \
 			-- --debug --debug-brk --inspect",
 
 // TODO continue testing targets here
@@ -88,17 +88,19 @@
 			-- --watch --watch-extensions=js --reporter=min",
 
 		// this test watcher will compile and run tests every time a change happens
-		"watch": "mocha-typescript-watch --opts mocha.opts \
+		"watch-mt": "mocha-typescript-watch --opts mocha.opts \
 			'./dist/{**/,}*.{test,spec}.js'",
-		"watch1": "mocha-typescript-watch --opts mocha.opts",
+		"watch-mt1": "mocha-typescript-watch --opts mocha.opts",
 
 		// run the tests with coverage instrumentation
 		"precover": "npm-json5 run cleanall && npm-json5 run compile:cover",
-		"cover": "istanbul cover -e .ts --root ./src \
-			--preserve-comments -x '*.{test,spec}.ts' -x '*.skip.ts' \
+		"_istanbul": "istanbul cover -e .ts --root ./src \
+			--preserve-comments -x '*.{test,spec,skip}.ts' \
 			--print both --verbose \
-			_mocha -- 'src/{**/,}*.{test,spec}.ts' \
-			--compilers ts:ts-node/register",
+			_mocha -- --compilers ts:ts-node/register",
+		"cover": "npm-json5 run _istanbul -- 'src/{**/,}*.{test,spec}.ts'",
+		// npm5 run precover && npm5 run cover:single -- src/string/shorten-left.test.ts
+		"cover:single": "npm-json5 run _istanbul",
 		"postcover": "echo To view coverage open ./coverage/lcov-report/index.html",
 		"precoveralls": "npm-json5 run cover",
 		"coveralls": "istanbul check-coverage",
@@ -108,9 +110,10 @@
 		"prebuild": "npm-json5 run coveralls",
 		"build": "npm-json5 run _typescript",
 
+		// poor man's watcher but runs specific build target
 		"watch": "auto-build.sh ./scripts/test.sh ./src",
 
-		"env": "set | grep PATH", // just to debug the environment
+		"env": "set | egrep -i 'node|n[pv]m|path'", // just to debug the environment
 	},
 	"keywords": [
 		"type-checking",
