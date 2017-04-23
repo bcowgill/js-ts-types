@@ -33,12 +33,12 @@
 		"_typescript": "tsc --pretty --newline LF",
 		"compile": "npm-json5 run _typescript",
 		"compile:debug": "npm-json5 run compile \
-			-- --project tsconfig-debug.json",
+			-- -- --project tsconfig-debug.json",
 		"compile:watch": "npm-json5 run compile -- --watch",
 		"postcompile": "rm tsconfig*.json",
-		"postcompile:debug": "rm tsconfig*.json",
 		"precompilefix": "npm-json5 run clean && npm-json5 run fix",
 		"compilefix": "npm-json5 run _typescript",
+		"postcompilefix": "npm-json5 run postcompile",
 		"compile:cover": "npm-json5 run compile \
 			-- -- --project tsconfig-cover.json",
 
