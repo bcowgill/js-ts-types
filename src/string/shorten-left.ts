@@ -27,8 +27,8 @@ export class ShortenLeft /* extends IShortenStringStatic */ implements IShortenS
 
 		if (string.length > length)
 		{
-			const length_diff : number = length - ellipsis.length
-			shortened = ellipsis + string.substr(-length_diff)
+			const lengthDiff : number = length - ellipsis.length
+			shortened = ellipsis + string.substr(-lengthDiff)
 		}
 
 		return shortened

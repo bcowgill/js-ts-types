@@ -28,8 +28,8 @@ export class Shorten /* extends IShortenStringStatic */ implements IShortenStrin
 
 		if (string.length > length)
 		{
-			const length_diff : number = length - ellipsis.length
-			shortened = string.substr(START, length_diff) + ellipsis
+			const lengthDiff : number = length - ellipsis.length
+			shortened = string.substr(START, lengthDiff) + ellipsis
 		}
 
 		return shortened

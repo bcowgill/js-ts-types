@@ -61,4 +61,3 @@ const testIt = ThrowInvalidFactory.callThrowInvalid
 	}
 }
 
-void ThrowInvalidTestSuite

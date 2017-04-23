@@ -28,18 +28,18 @@ export class ShortenMiddle /* extends IShortenStringStatic */ implements IShorte
 
 		if (string.length > length)
 		{
-			const length_diff : number = length - ellipsis.length + 1
-			let first_half : number = Math.floor(length_diff / 2)
-			let last_half : number = first_half - _odd(length_diff)
-			if (last_half > first_half)
+			const lengthDiff : number = length - ellipsis.length + 1
+			let firstHalf : number = Math.floor(lengthDiff / 2)
+			let lastHalf : number = firstHalf - _odd(lengthDiff)
+			if (lastHalf > firstHalf)
 			{
-				let temp : number = last_half
-				last_half = first_half
-				first_half = temp
+				let temp : number = lastHalf
+				lastHalf = firstHalf
+				firstHalf = temp
 			}
-			shortened = string.substr(START, first_half)
+			shortened = string.substr(START, firstHalf)
 				+ ellipsis
-				+ string.substr(-last_half)
+				+ string.substr(-lastHalf)
 		}
 
 		return shortened

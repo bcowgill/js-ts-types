@@ -10,17 +10,20 @@ const LONG = '012345678901234567890123456789012345678901234567890123456789012345
 describe('Shorteners', function () {
 	it('should have access to Shorten class', function ()
 	{
-		  expect(Shorteners.Shorten).to.exist
+		// tslint:disable-next-line:no-unused-expression
+		expect(Shorteners.Shorten).to.exist
 	})
 
 	it('should have access to ShortenLeft class', function ()
 	{
-		  expect(Shorteners.ShortenLeft).to.exist
+		// tslint:disable-next-line:no-unused-expression
+		expect(Shorteners.ShortenLeft).to.exist
 	})
 
 	it('should have access to ShortenMiddle class', function ()
 	{
-		  expect(Shorteners.ShortenMiddle).to.exist
+		// tslint:disable-next-line:no-unused-expression
+		expect(Shorteners.ShortenMiddle).to.exist
 	})
 })
 
@@ -28,32 +31,32 @@ describe('Shorten', function () {
 	describe('constructor()', function () {
 		it('should use default properties', function ()
 		{
-			  const testMe = Shorten.of()
-			  expect(testMe.ELLIPSIS).to.be.equal(ELLIPSIS)
-			  expect(testMe.MAX_LENGTH).to.be.equal(128)
+			const testMe = Shorten.of()
+			expect(testMe.ELLIPSIS).to.be.equal(ELLIPSIS)
+			expect(testMe.MAX_LENGTH).to.be.equal(128)
 		})
 
 		it('should override default properties', function ()
 		{
-			  const testMe = Shorten.of(13, '...')
-			  expect(testMe.ELLIPSIS).to.be.equal('...')
-			  expect(testMe.MAX_LENGTH).to.be.equal(13)
+			const testMe = Shorten.of(13, '...')
+			expect(testMe.ELLIPSIS).to.be.equal('...')
+			expect(testMe.MAX_LENGTH).to.be.equal(13)
 		})
 
 		it('of() should construct', function ()
 		{
-			  const testMe = Shorten.of(13, '...')
-			  expect(testMe.ELLIPSIS).to.be.equal('...')
-			  expect(testMe.MAX_LENGTH).to.be.equal(13)
+			const testMe = Shorten.of(13, '...')
+			expect(testMe.ELLIPSIS).to.be.equal('...')
+			expect(testMe.MAX_LENGTH).to.be.equal(13)
 		})
 	})
 
 	describe('shorten()', function () {
 		it('should leave a short string as is', function ()
 		{
-			  const testMe = Shorten.of()
-			  const result = testMe.shorten('something short enough')
-			  expect(result).to.be.equal('something short enough')
+			const testMe = Shorten.of()
+			const result = testMe.shorten('something short enough')
+			expect(result).to.be.equal('something short enough')
 		})
 
 		it('should shorten a long string to default 128', function ()

@@ -30,17 +30,18 @@
 		"no-use-before-declare": true,
 		"no-var-requires": false,
 		"one-line": [
-			true,
-			"check-open-brace",
-			"check-catch",
-			"check-else",
-			"check-whitespace",
+			false,
+//			"check-open-brace",
+//			"check-catch",
+//			"check-finally",
+//			"check-else",
+//			"check-whitespace",
 		],
 		"quotemark": [
 			true,
 			"single",
 		],
-		"semicolon": true,
+		"semicolon": false,
 		"triple-equals": [
 			true,
 			"allow-null-check",
@@ -64,8 +65,11 @@
 			"check-branch",
 			"check-decl",
 			"check-operator",
+			"check-module", // try it
 			"check-separator",
 			"check-type",
+			"check-typecast", // try it
+			"check-preblock", // try it
 		],
 	},
 }

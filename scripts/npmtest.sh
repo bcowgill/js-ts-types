@@ -4,10 +4,9 @@ set -x
 npm5 run json5
 npm5 run clean
 npm5 run cleanall
-
-
 npm5 run lint
 npm5 run fix
+
 npm5 run compile
 npm5 run compilefix
 npm5 run test

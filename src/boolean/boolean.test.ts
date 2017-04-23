@@ -34,4 +34,3 @@ function testIt (value: any, prop? : string, name? : string) : () => boolean | n
 	}
 }
 
-void BooleanTestSuite
