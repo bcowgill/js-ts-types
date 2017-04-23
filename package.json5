@@ -1,89 +1,149 @@
 {
-	name: 'js-ts-types',
-	version: '1.0.0',
-	description: 'Javascript plus Typescript type checking library (tooling: mocha, chai, json5)',
-	main: './dist/index.js',
-	scripts: {
-		// npm5 run json5; npm test  OR JUST npm5 test
-		json5: 'json5 -c *.json5', // generate package.json from package.json5 not really necessary
+  "name": 'js-ts-types',
+  "version": '1.0.0',
+  "description": 'Javascript plus Typescript type checking library (tooling: mocha, chai, json5)',
+  "main": './dist/index.js',
+  "repository": {
+    "type": 'git',
+    "url": 'git+https://github.com/bcowgill/js-ts-types.git',
+  },
+  "scripts": {
+    // npm5 run json5; npm test  OR JUST npm5 test
+    "json5": 'json5 -c *.json5', // generate package.json from package.json5 not really necessary
 
-		// compile typescript to javascript
-		precompile: 'json5 -c tsconfig*.json5',
-		compile: 'tsc --newline LF', // ./src/*.ts ./src/**/*.ts',
-		"compile:debug": 'npm-json5 run compile -- --project tsconfig-debug.json',
-		"compile:watch": 'npm-json5 run compile -- --watch',
-		postcompile: 'rm tsconfig*.json',
+    // adding new modules and mainting the shrinkwrap
+    "addmodule": "npm install --save",
+    "adddevmodule": "npm-json5 install --save-dev",
+    "postaddmodule": "npm-json5 shrinkwrap",
+    "postadddevmodule": "npm-json5 run postaddmodule",
 
-		// docs which helped setting up the mocha/chai/typescript configuration
-		// https://www.npmjs.com/package/mocha-typescript
-		// https://journal.artfuldev.com/write-tests-for-typescript-projects-with-mocha-and-chai-in-typescript-86e053bdb2b6
+    // remove generated files
+    "clean": "rm -rf package.json ts*.json \
+      ./.tmp/ ./dist/ ./sourceMaps ./src/*.js",
+    "cleanall": "npm-json5 run clean \
+      && rm -rf ./coverage .cover*",
 
-		// TODO change to use a mocha.opts file ??
+    // compile/lint typescript to javascript
+    "prelint": "json5 -c ts*.json5",
+    "lint": "tslint --config tslint.json --project tsconfig.json \
+      --format codeFrame",
+    "fix": "npm run lint -- --fix",
+    "precompile": "npm-json5 run clean && npm-json5 run lint",
+    "_typescript": "tsc --pretty --newline LF",
+    "compile": "npm-json5 run _typescript",
+    "compile:debug": 'npm-json5 run compile \
+      -- --project tsconfig-debug.json',
+    "compile:watch": 'npm-json5 run compile -- --watch',
+    "postcompile": 'rm tsconfig*.json',
+    "postcompile:debug": 'rm tsconfig*.json',
+    "precompilefix": "npm-json5 run clean && npm-json5 run fix",
+    "compilefix": "npm-json5 run _typescript",
+    "compile:cover": "npm-json5 run compile \
+      -- -- --project tsconfig-cover.json",
 
-		// default options for mocha cmd
-		"_mocha1": "mocha --growl --ui=bdd --reporter=spec \
-			--check-leaks \
-			--full-trace \
-			--inline-diffs \
-			--sort",
-		"_mocha": "npm-json5 run _mocha1 -- './dist/{**/,}*.{test,spec}.js'",
+    // docs which helped setting up the mocha/chai/typescript configuration
+    // "https"://www.npmjs.com/package/mocha-typescript
+    // "https"://journal.artfuldev.com/write-tests-for-typescript-projects-with-mocha-and-chai-in-typescript-86e053bdb2b6
 
-		// npm5 run test:single
-		// npm5 run test -- -- --grep 'Array #indexOf'
-		pretest: "npm-json5 run compile",
-		"test": "npm-json5 run _mocha",
+    // TODO change to use a mocha.opts file ??
 
-		// npm5 run test1 src/testplan.test.js
-		"test1": "npm-json5 run _mocha1",
+    // testing the compiled javascript
 
-		// run single test in node debugger. .exit to quit
-		// npm5 run test1:repl src/testplan.test.js
-		// https://nodejs.org/api/debugger.html
-		// next, cont, repl, list(N lines), help, quit
-		"test1:repl": "npm-json5 run _mocha1 -- debug",
+    // default options for mocha cmd
+    "_mocha1": "mocha --ui bdd --growl \
+      --check-leaks \
+      --full-trace \
+      --inline-diffs \
+      --sort \
+      --recursive \
+      --reporter spec",
+    "_mocha": "npm-json5 run _mocha1 \
+      -- './dist/{**/,}*.{test,spec}.js'",
 
-		// run single test and show URL to attach chrome dev tools to it.
-		// npm5 run test1:debug src/testplan.test.js
-		"test1:debug": "npm-json5 run _mocha1 -- --debug --debug-brk --inspect",
+    // npm5 run test -- -- --grep 'Array #indexOf'
+    "pretest": "npm-json5 run compile",
+    "test": "npm-json5 run _mocha",
+    "pretestfix": "npm-json5 run compilefix",
+    "testfix": "npm-json5 run _mocha",
 
-		// this test watcher works, if you also have the compile:watch running
-		"test:watch": "npm-json5 run _mocha -- --watch --watch-extensions=js --reporter=min",
+    // npm5 run test1 src/testplan.test.js
+    "test1": "npm-json5 run _mocha1",
 
-		// this test watcher will compile and run tests every time a change happens
-		"watch": "mocha-typescript-watch --opts mocha.opts './dist/{**/,}*.{test,spec}.js'",
-		"watch1": "mocha-typescript-watch --opts mocha.opts",
+    // run single test in node debugger. .exit to quit
+    // npm5 run "test1":repl src/testplan.test.js
+    // "https"://nodejs.org/api/debugger.html
+    // next, cont, repl, list(N lines), help, quit
+    "test1:repl": "npm-json5 run _mocha1 -- debug",
 
-		// build will compile, test and package...
-		prebuild: 'npm-json5 run test',
-		build: 'echo final build...',
+    // run single test and show URL to attach chrome dev tools to it.
+    // npm5 run "test1":debug src/testplan.test.js
+    "test1:debug": "npm-json5 run _mocha1 \
+      -- --debug --debug-brk --inspect",
 
-		clean: 'rm -rf package.json tsconfig*.json ./.tmp/ ./dist/ ./src/*.js',
-		env: "set | grep PATH", // just to debug the environment
-	},
-	repository: {
-		type: 'git',
-		url: 'git+https://github.com/bcowgill/js-ts-types.git',
-	},
-	keywords: [
-		'type-checking',
-		'validation',
-		'typescript-mocha-chai-json5',
-		'i18n'
-	],
-	author: 'Brent S.A. Cowgill',
-	license: 'Unlicense',
-	bugs: {
-		url: 'https://github.com/bcowgill/js-ts-types/issues',
-	},
-	homepage: 'https://github.com/bcowgill/js-ts-types#readme',
-	devDependencies: {
-		"json5": "^0.5.1",      // to convert package.json5 to package.json
-		"npm-json5": "^0.1.4",  // provides npm5 command so that package.json doesn't need to be generated
-		typescript: '^2.2.2',   // to convert typescript .ts files to .js
-		chai: '^3.5.0',         // chai assertion library for unit testing
-		mocha: '^3.2.0',
-		'mocha-typescript': '^1.0.23',
-		'@types/chai': '^3.4.35',
-		'@types/mocha': '^2.2.40',        // mocha unit test runner
-	},
+    // this test watcher works, if you also have the "compile":watch running
+    "test:watch": "npm-json5 run _mocha \
+      -- --watch --watch-extensions=js --reporter=min",
+
+    // this test watcher will compile and run tests every time a change happens
+    "watch": "mocha-typescript-watch --opts mocha.opts \
+      './dist/{**/,}*.{test,spec}.js'",
+    "watch1": "mocha-typescript-watch --opts mocha.opts",
+
+    // run the tests with coverage instrumentation
+    "precover": "npm-json5 run cleanall && npm-json5 run compile:cover",
+    "cover": "istanbul cover -e .ts --root ./src \
+      --preserve-comments -x '*.{test,spec}.ts' -x '*.skip.ts' \
+      --print both --verbose \
+      _mocha -- 'src/{**/,}*.{test,spec}.ts' \
+      --compilers ts:ts-node/register",
+    "postcover": "echo To view coverage open coverage/lcov-report/index.html",
+    "precoveralls": "npm-json5 run cover",
+    "coveralls": "istanbul check-coverage",
+
+    // producing a build for deployment
+    // build will compile, test with coverage and package...
+    "prebuild": "npm-json5 run coveralls",
+    "build": "npm run _typescript",
+
+    "watch": "auto-build.sh ./scripts/test.sh ./src",
+
+    "env": "set | grep PATH", // just to debug the environment
+  },
+  "keywords": [
+    'type-checking',
+    'validation',
+    'typescript-mocha-chai-json5',
+    'i18n'
+  ],
+  "engines": {
+    "node": "~5.6"
+  },
+  "author": 'Brent S.A. Cowgill',
+  "license": 'Unlicense',
+  "bugs": {
+    "url": 'https://github.com/bcowgill/js-ts-types/issues',
+  },
+  "homepage": 'https://github.com/bcowgill/js-ts-types#readme',
+  "devDependencies": {
+    "@types/chai": "^3.5.0",
+    "@types/chai-as-promised": "0.0.30",
+    "@types/istanbul": "^0.4.29",        // code coverage tool
+    "@types/mocha": "^2.2.40",        // mocha unit test runner
+    "@types/promisify-node": "^0.4.0",
+    "@types/q": "^1.0.0",
+    "@types/sinon": "^2.1.2",
+    "json5": "^0.5.1",      // to convert package.json5 to package.json
+    "npm-json5": "^0.1.4",  // provides npm5 command so that package.json doesn't need to be generated
+    "chai": "^3.5.0",         // chai assertion library for unit testing
+    "chai-as-promised": "^6.0.0",
+    "chai-sinon": "^2.8.1",
+    "istanbul": "1.1.0-alpha.1",
+    "mocha": "https://registry.npmjs.org/mocha/-/mocha-3.2.0.tgz",
+    "mocha-typescript": "^1.0.23",
+    "sinon": "^2.1.0",
+    "sinon-test": "^1.0.1",
+    "ts-node": "^3.0.2",
+    "tslint": "^5.1.0",
+    "typescript": "^2.3.0",   // to convert typescript .ts files to .js
+  },
 }
