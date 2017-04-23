@@ -67,21 +67,22 @@
 		"pretestfix": "npm-json5 run compilefix",
 		"testfix": "npm-json5 run _mocha",
 
-		// npm5 run test1 src/testplan.test.js
+		// npm5 run test1 -- ./dist/testplan.test.js
 		"test1": "npm-json5 run _mocha1",
 
 		// run single test in node debugger. .exit to quit
-		// npm5 run "test1":repl src/testplan.test.js
+		// npm5 run test1:repl -- ./dist/testplan.test.js
 		// "https"://nodejs.org/api/debugger.html
 		// next, cont, repl, list(N lines), help, quit
 		"test1:repl": "npm-json5 run _mocha1 -- debug",
 
 		// run single test and show URL to attach chrome dev tools to it.
-		// npm5 run "test1":debug src/testplan.test.js
+		// npm5 run test1:debug -- ./dist/testplan.test.js
 		"test1:debug": "npm-json5 run _mocha1 \
 			-- --debug --debug-brk --inspect",
 
-		// this test watcher works, if you also have the "compile":watch running
+// TODO continue testing targets here
+		// this test watcher works, if you also have the compile:watch running
 		"test:watch": "npm-json5 run _mocha \
 			-- --watch --watch-extensions=js --reporter=min",
 
