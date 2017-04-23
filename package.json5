@@ -41,6 +41,7 @@
 		"postcompilefix": "npm-json5 run postcompile",
 		"compile:cover": "npm-json5 run compile \
 			-- -- --project tsconfig-cover.json",
+		"postcompile:cover": "npm-json5 run json5",
 
 		// docs which helped setting up the mocha/chai/typescript configuration
 		// "https"://www.npmjs.com/package/mocha-typescript
@@ -98,7 +99,7 @@
 			--print both --verbose \
 			_mocha -- 'src/{**/,}*.{test,spec}.ts' \
 			--compilers ts:ts-node/register",
-		"postcover": "echo To view coverage open coverage/lcov-report/index.html",
+		"postcover": "echo To view coverage open ./coverage/lcov-report/index.html",
 		"precoveralls": "npm-json5 run cover",
 		"coveralls": "istanbul check-coverage",
 

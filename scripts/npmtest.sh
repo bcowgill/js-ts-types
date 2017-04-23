@@ -15,11 +15,11 @@ npm5 run testfix
 npm5 run test1 -- ./dist/string/shorten.test.js
 npm5 run test1:repl -- ./dist/string/shorten.test.js
 npm5 run test1:debug -- ./dist/string/shorten.test.js
+npm5 run cover
+npm5 run coveralls
 
 exit 0
 // TODO continue testing targets here
-npm5 run cover
-npm5 run coveralls
 npm5 run build
 
 exit 0
