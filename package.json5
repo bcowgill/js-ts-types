@@ -24,7 +24,7 @@
 			&& rm -rf ./coverage .cover*",
 
 		// compile/lint typescript to javascript
-		"prelint": "json5 -c ts*.json5",
+		"prelint": "json5 -c ts*.json5 && ./scripts/entab-json.sh",
 		"lint": "tslint --config tslint.json --project tsconfig.json \
 			--format codeFrame",
 		"fix": "npm run lint -- --fix",
