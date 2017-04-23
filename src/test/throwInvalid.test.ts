@@ -61,3 +61,4 @@ const testIt = ThrowInvalidFactory.callThrowInvalid
 	}
 }
 
+void ThrowInvalidTestSuite //tslint:disable-line:no-unused-expression

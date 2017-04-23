@@ -26,7 +26,8 @@
 		"no-switch-case-fall-through": true,
 		"no-trailing-whitespace": true,
 		"no-unused-expression": true,
-		"no-unused-variable": true,
+		// not needed as compiler settings no-unused-locals and no-unused-parameters are set
+		"no-unused-variable": false,
 		"no-use-before-declare": true,
 		"no-var-requires": false,
 		"one-line": [

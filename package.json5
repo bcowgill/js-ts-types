@@ -26,8 +26,9 @@
 		// compile/lint typescript to javascript
 		"prelint": "npm-json5 run json5",
 		"lint": "tslint --config tslint.json --project tsconfig.json \
-			--format codeFrame", // add --type-check
-		"fix": "npm run lint -- --fix",
+			--type-check \
+			--format codeFrame",
+		"fix": "npm-json5 run lint -- --fix",
 		"precompile": "npm-json5 run clean && npm-json5 run lint",
 		"_typescript": "tsc --pretty --newline LF",
 		"compile": "npm-json5 run _typescript",
@@ -103,7 +104,7 @@
 		// producing a build for deployment
 		// build will compile, test with coverage and package...
 		"prebuild": "npm-json5 run coveralls",
-		"build": "npm run _typescript",
+		"build": "npm-json5 run _typescript",
 
 		"watch": "auto-build.sh ./scripts/test.sh ./src",
 

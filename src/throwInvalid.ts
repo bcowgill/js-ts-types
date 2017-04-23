@@ -27,5 +27,3 @@ export function throwInvalid (params : TypeErrorInfo) : never
 		: `${params.name} provided <${value}> ${params.reason}`
 	throw new Error(params.description)
 }
-
-export default throwInvalid
