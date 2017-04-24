@@ -20,6 +20,7 @@ my $PCT = 0;
 my $TYPE = 1;
 my $RATIO = 2;
 
+my $report = $ARGV[0];
 my $html = <>;
 
 if ($html =~ m{Code \s+ coverage \s+ report \s+ for \s+ (.+?) \s*</title>}xms)
@@ -42,7 +43,7 @@ $html =~ s{
 #print "module: $module\n";
 #print Dumper(\%coverage);
 #print qq{\n};
-print qq{$worst,$filename,$ENV{MODULE},$coverage{Statements},$coverage{Branches},$coverage{Functions},$coverage{Lines},$ENV{TEST_PLAN}\n};
+print qq{$worst,$filename,$ENV{MODULE},$coverage{Statements},$coverage{Branches},$coverage{Functions},$coverage{Lines},$ENV{TEST_PLAN},$report\n};
 
 sub pull_stats
 {

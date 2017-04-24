@@ -154,7 +154,7 @@ function append_csv {
 	module="$2"
 	html="$3"
 	if [ ! -f $COV_CSV ]; then
-		echo "Worst,File,Full Path,Statements,Statements Detail,Branches,Branches Detail,Functions,Functions Detail,Lines,Lines Detail,Test Plan" > $COV_CSV
+		echo "Worst,File,Full Path,Statements,Statements Detail,Branches,Branches Detail,Functions,Functions Detail,Lines,Lines Detail,Test Plan,Cover HTML" > $COV_CSV
 	fi
 	# first 12 span elements contain the total coverage resuls
 	# td.file.medium data-value contains file name
@@ -190,7 +190,8 @@ function cover_single {
 }
 
 function cover_summary {
-	echo TODO Summary not implemented yet...
+	echo "Coverage Summary created:"
+	echo "$COV_INDEX"
 	tar xvf $COV_TAR
 	$COV_OUTPUT $COV_CSV > $COV_INDEX
 	tar rf $COV_TAR $COV_INDEX $COV_CSV

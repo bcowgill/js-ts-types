@@ -45,6 +45,10 @@ my %Mapping = (
 		my ($rhValues) = @ARG;
 		return get($rhValues, 'TEST_PLAN', 'Test Plan')
 	},
+	COVER_HTML => sub {
+		my ($rhValues) = @ARG;
+		return get($rhValues, 'COVER_HTML', 'Cover HTML')
+	},
 	ST_DETAIL => sub {
 		my ($rhValues) = @ARG;
 		return get($rhValues, 'ST_DETAIL', 'Statements Detail')
