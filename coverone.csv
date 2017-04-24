@@ -1,6 +1,6 @@
 Worst,File,Full Path,Statements,Statements Detail,Branches,Branches Detail,Functions,Functions Detail,Lines,Lines Detail,Test Plan,Cover HTML
-41.67,shorten-middle.ts,src/string/shorten-middle.ts,65.38%,17/26,41.67%,5/12,80%,4/5,64%,16/25,src/string/shorten-middle.test.ts,coverage/lcov-report/src/string/shorten-middle.ts.html
-100,boolean.ts,src/boolean/boolean.ts,100%,4/4,100%,2/2,100%,1/1,100%,4/4,src/boolean/boolean.test.ts,coverage/lcov-report/src/boolean/boolean.ts.html
-100,shorten-left.ts,shorten-left.ts,100%,18/18,100%,10/10,100%,4/4,100%,17/17,src/string/shorten-left.test.ts,coverage/lcov-report/shorten-left.ts.html
-100,shorten.ts,shorten.ts,100%,19/19,100%,10/10,100%,4/4,100%,18/18,src/string/shorten.test.ts,coverage/lcov-report/shorten.ts.html
-100,throwInvalid.ts,src/throwInvalid.ts,100%,7/7,100%,6/6,100%,1/1,100%,7/7,src/test/throwInvalid.test.ts,coverage/lcov-report/src/throwInvalid.ts.html
+41.67,shorten-middle.ts,src/string/shorten-middle.ts,65.38%,17/26,41.67%,5/12,80%,4/5,64%,16/25,src/string/shorten-middle.test.ts,src/string/shorten-middle.ts.html
+100,boolean.ts,src/boolean/boolean.ts,100%,4/4,100%,2/2,100%,1/1,100%,4/4,src/boolean/boolean.test.ts,src/boolean/boolean.ts.html
+100,shorten-left.ts,src/string/shorten-left.ts,100%,18/18,100%,10/10,100%,4/4,100%,17/17,src/string/shorten-left.test.ts,shorten-left.ts.html
+100,shorten.ts,src/string/shorten.ts,100%,19/19,100%,10/10,100%,4/4,100%,18/18,src/string/shorten.test.ts,shorten.ts.html
+100,throwInvalid.ts,src/throwInvalid.ts,100%,7/7,100%,6/6,100%,1/1,100%,7/7,src/test/throwInvalid.test.ts,src/throwInvalid.ts.html

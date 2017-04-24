@@ -161,7 +161,7 @@ function append_csv {
 	TMP=`mktemp`
 	(\
 		cat $COV_CSV; \
-		MODULE="$module" TEST_PLAN="$plan" $COV_SCRAPE "$html" \
+		COV_DIR="$COV_DIR/" MODULE="$module" TEST_PLAN="$plan" $COV_SCRAPE "$html" \
 	) | sort -n > $TMP
 	mv $TMP $COV_CSV
 }
@@ -249,7 +249,7 @@ if [ -e "$TEST_PLAN" ]; then
 	else
 		echo "$TEST_PLAN: configured $MODULE into $COV_HTML"
 	fi
-	cover_single "$TEST_PLAN" "$MODULE" "$COV_HTML"
+	cover_single "$TEST_PLAN" "$ACTUAL" "$COV_HTML"
 else
 	echo "$TEST_PLAN: does not exist."
 fi

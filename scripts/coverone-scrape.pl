@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 # scrape the coverage values from the html output
-# MODULE=path/obj.js TEST_PLAN=path/obj.test.js coverone-scrape.pl index.html
+# COV_DIR=coverage MODULE=path/obj.js TEST_PLAN=path/obj.test.js coverone-scrape.pl index.html
 
 use English qw(-no_match_vars);
 use strict;
@@ -22,6 +22,8 @@ my $RATIO = 2;
 
 my $report = $ARGV[0];
 my $html = <>;
+
+$report =~ s{\A$ENV{COV_DIR}}{}xms;
 
 if ($html =~ m{Code \s+ coverage \s+ report \s+ for \s+ (.+?) \s*</title>}xms)
 {
