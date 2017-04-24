@@ -6,18 +6,30 @@ IST_REP_VER="istanbul-reports@^1.0.2"
 
 #===========================================================================
 # Change configuration as needed:
-NPM=npm5
+#NPM=npm
+NPM=npm-json5
 SRC=src
+#TESTS=test
 TESTS=src
+#CODE_EXT=.js
 CODE_EXT=.ts
 SUFF1=spec
 SUFF2=test
 SUFF3=node
+COV_DIR=coverage/lcov-report
 
 TEST_SUFF1=".$SUFF1$CODE_EXT"
 TEST_SUFF2=".$SUFF2$CODE_EXT"
 TEST_SUFF3=".$SUFF3$CODE_EXT"
 GLOB="$SUFF1|$SUFF2|$SUFF3"
+
+COV_CFG=coverone.cfg
+COV_CSV=coverone.csv
+COV_TAR=coverone.tar
+COV_LOG=coverone.log
+
+COV_INDEX=$COV_DIR/index.html
+COV_SCRAPE=`dirname $0`/coverone-scrape.pl
 
 #===========================================================================
 USAGE=
@@ -51,6 +63,11 @@ For example:
 src/path/dummy$TEST_SUFF1 => src/path/dummy$CODE_EXT
 src/path/tests/dummy$TEST_SUFF1 => src/path/dummy$CODE_EXT
 test/path/dummy$TEST_SUFF1 => src/path/dummy$CODE_EXT
+
+If all else fails, you can configure which modules are covered by which test plans by listing an entry in $COV_CFG of the form:
+
+test/plan$TEST_SUFF1 src/file$CODE_EXT ...
+
 "
 	if [ $USAGE == 2 ]; then
 		echo "
@@ -76,37 +93,123 @@ $NPM run precover
 
 Command used to run coverage for a single test plan:
 $NPM run cover:single -- $SRC/path/to/plan$TEST_SUFF1
+
+Coverage output for source modules is assumed to be in:
+$COV_DIR/$SRC
+
+Output from your project's cover command will be logged to:
+$COV_LOG
+
+Coverage stats from the output html will be recorded in:
+$COV_CSV
+
+And the output coverage html pages will be accumulated in:
+$COV_TAR
+
+Manual configuration of which modules are covered by which tests in file:
+$COV_CFG
 "
 	fi
 	exit 0
 fi
 
+function cover_start {
+	echo "Init coverone processing."
+	rm $COV_CSV $COV_TAR $COV_LOG 2> /dev/null
+	echo "Preparing to cover single test plans by compiling with comments enabled." >> $COV_LOG
+	$NPM run precover >> $COV_LOG 2>&1
+}
+
+function get_test_plans {
+	find $TESTS -name "*$TEST_SUFF1" \
+		-o -name "*$TEST_SUFF2" \
+		-o -name "*$TEST_SUFF3" \
+		| sort -d
+}
+
 function assume_module {
 	local plan
 	plan="$1"
-	RETURN=`
-	echo $plan |
-	GLOB="$GLOB" SRC="$SRC" perl -pne '
-		s{\Atests?}{$ENV{SRC}}xmsg;
-		s{/tests?/}{/}xmsg;
-		s{\.($ENV{GLOB})}{}xmsg
-	'`
+	echo $plan | \
+		GLOB="$GLOB" SRC="$SRC" perl -pne '
+			s{\Atests?}{$ENV{SRC}}xmsg;
+			s{/tests?/}{/}xmsg;
+			s{\.($ENV{GLOB})}{}xmsg
+		'
 }
 
-PLANS=`find $TESTS -name "*$TEST_SUFF1" -o -name "*$TEST_SUFF2" -o -name "*$TEST_SUFF3" | sort -d`
+function module_config {
+	local plan found
+	plan="$1"
+   #perl -e "print STDERR qq{mod config $plan\n}"
+	#perl -ne "print STDERR qq{find $plan \$_\\n}; if (s{\\A$plan\\s+}{}xms) { print; print STDERR \$_}" $COV_CFG
+	found=`perl -ne "if (s{\\A$plan\\s+}{}xms) { print; }" $COV_CFG`
+	echo "$found"
+}
+
+function append_csv {
+	local plan module html TMP
+	plan="$1"
+	module="$2"
+	html="$3"
+	if [ ! -f $COV_CSV ]; then
+		echo "Worst,File,Full Path,Statements,Statements Detail,Branches,Branches Detail,Functions,Functions Detail,Lines,Lines Detail,Test Plan" > $COV_CSV
+	fi
+	# first 12 span elements contain the total coverage resuls
+	# td.file.medium data-value contains file name
+	TMP=`mktemp`
+	(\
+		cat $COV_CSV; \
+		MODULE="$module" TEST_PLAN="$plan" $COV_SCRAPE "$html" \
+	) | sort -n > $TMP
+	mv $TMP $COV_CSV
+}
+
+function cover_single {
+	local plan module html
+	plan="$1"
+	module="$2"
+	html="$3"
+	echo Covering Single Module $module from $plan into $html >> $COV_LOG
+	$NPM run cover:single -- "$plan" >> $COV_LOG 2>&1
+	if [ -e "$html" ]; then
+		append_csv "$plan" "$module" "$html"
+		M=r
+		if [ ! -f $COV_TAR ]; then
+			M=c
+		fi
+		tar ${M}f $COV_TAR $html
+	else
+		#find $COV_DIR -type f >> $COV_LOG
+		echo "$plan: coverage not found, possible test targets are:"
+		pushd $COV_DIR > /dev/null
+			find . -type f | grep -v 'index.html' | perl -pne 's{\A}{   }xmsg; s{\.html}{}xmsg'
+		popd > /dev/null
+	fi
+}
+
+function cover_summary {
+	echo TODO Summary not implemented yet...
+}
+
+PLANS=$(get_test_plans)
 
 #===========================================================================
 # list all test plans
 if [ $TEST_PLAN == "--list" ]; then
 	echo Test plans found and assumed module being tested:
-	for plan in $PLANS not.spec.ts test/x.spec.ts; do
-		assume_module $plan
+	for plan in $PLANS; do
+		MODULE=$(assume_module "$plan")
 		if [ -e "$plan" ]; then
-			if [ -e "$RETURN" ]; then
+			if [ -e "$MODULE" ]; then
 				echo "$plan"
-				echo "  ^-- $RETURN"
+				echo "  ^-- $MODULE"
 			else
 				echo "$plan: unknown test target module."
+			fi
+			MODULE=$(module_config "$plan")
+			if [ ! -z "$MODULE" ]; then
+				echo "  ^-- $MODULE.html (manually configured)"
 			fi
 		else
 			echo "$plan: does not exist."
@@ -119,31 +222,39 @@ fi
 # cover all test plans
 if [ $TEST_PLAN == "--all" ]; then
 	echo --all NOT SUPPORTED YET
-	exit 1
+	cover_start
+	for plan in $PLANS; do
+		echo "$plan"
+		$0 "$plan"
+#			| egrep -A 6 -i 'Covering Single|Coverage summary' \
+#			| egrep -v '^(--|>)' \
+	done
+	cover_summary
+	exit 0
 fi
 
 #===========================================================================
 # cover one specific test plan
-assume_module $TEST_PLAN
-MODULE=$RETURN
-echo "$TEST_PLAN => $MODULE"
+ACTUAL=$(assume_module "$TEST_PLAN")
+MODULE=$(module_config "$TEST_PLAN")
+if [ -z "$MODULE" ]; then
+	MODULE=$ACTUAL
+fi
+COV_HTML="$COV_DIR/$MODULE.html"
+if [ -e "$TEST_PLAN" ]; then
+	if [ -e "$ACTUAL" ]; then
+		echo "$TEST_PLAN: covers $ACTUAL into $COV_HTML"
+	else
+		echo "$TEST_PLAN: configured $MODULE into $COV_HTML"
+	fi
+	cover_single "$TEST_PLAN" "$MODULE" "$COV_HTML"
+else
+	echo "$TEST_PLAN: does not exist."
+fi
 
 exit 1
 
-# run one test plan with coverage and report on only the associated module.
-# assumes test plan named     ..../tests?/MMMMM.spec.ts  (or node/test)
-# has associated module named ..../MMMMM.ts
-# or if ..../MMMMM.spec.ts is a test plan and ..../MMMMM.ts is the module
-# being tested.
-
 # rm coverage.csv coverage.tar; ./scripts/coverone.sh app/utils/tests/MarkObject.spec.js ; ./scripts/coverone.sh app/utils/tests/Props.spec.js; cat coverage.csv ; tar tvf coverage.tar
-
-COV_DIR=coverage
-COV_TAR=coverage.tar
-COV_CSV=coverage.csv
-COV_LOG=coverage.log
-COV_INDEX=$COV_DIR/index.html
-PKG=package.json5
 
 #===========================================================================
 # cover all test plans
@@ -161,73 +272,3 @@ if [ $TEST_PLAN == "--all" ]; then
 	tar rf $COV_TAR $COV_INDEX $COV_CSV
 	exit 0
 fi
-
-#===========================================================================
-# cover one specific test plan
-MODULE=`echo $TEST_PLAN | perl -pne 's{/tests/}{/}xmsg; s{\.(spec|node|test)}{}xmsg'`
-COV_HTML=`basename $MODULE`.html
-
-echo TEST_PLAN=$TEST_PLAN
-echo MODULE=$MODULE
-echo COV_HTML=$COV_HTML
-
-# update the include nyc list in package.json5 with the single module
-MODULE="$MODULE" perl -i.covbak -e '
-	local $/ = undef;
-	$_ = <>;
-	s{
-		("include" \s* : \s* \[ \s* /\*nyc-marker\*/ \s* ) [^\]]+ (\])
-	}{$1 "$ENV{MODULE}" $2}xmsg;
-	print
-' $PKG
-
-npm run json5
-npm run clean:coverage
-npm run clean:build:test
-echo Covering Single Module $MODULE from $TEST_PLAN
-npm run test:coverage:single -- $TEST_PLAN
-# restore package.json5 to normal
-mv $PKG.covbak $PKG
-npm run json5
-
-if [ ! -f $COV_CSV ]; then
-	echo "Worst,File,Full Path,Statements,Statements Detail,Branches,Branches Detail,Functions,Functions Detail,Lines,Lines Detail,Test Plan" > $COV_CSV
-fi
-# first 12 span elements contain the total coverage resuls
-# td.file.medium data-value contains file name
-TMP=`mktemp`
-(\
-	cat $COV_CSV; \
-	egrep 'span|data-value' $COV_INDEX \
-	| MODULE="$MODULE" TEST_PLAN="$TEST_PLAN" perl -ne '
-		unless ($filename) {
-			if (m{data-value="([^"]+)"}xms)
-			{
-				$filename = $1
-			}
-		}
-		if (m{<span[^>]*>\s*(.+?)\%?\s*</span>})
-		{
-			push(@spans, $1);
-			if (scalar(@spans) >= 3)
-			{
-				$cov{$spans[1]} = "$spans[0]%,$spans[2]";
-				if (!$worst || $spans[0] < $worst)
-				{
-					$worst = $spans[0]
-				};
-				@spans = ()
-			}
-		}
-		END {
-			print qq{$worst,$filename,$ENV{MODULE},$cov{Statements},$cov{Branches},$cov{Functions},$cov{Lines},$ENV{TEST_PLAN}\n}
-		}
-	' \
-) | sort -n > $TMP
-mv $TMP $COV_CSV
-
-M=r
-if [ ! -f $COV_TAR ]; then
-	M=c
-fi
-tar ${M}f $COV_TAR $COV_DIR/$COV_HTML || find $COV_DIR -ls

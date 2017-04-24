@@ -1,0 +1,6 @@
+Worst,File,Full Path,Statements,Statements Detail,Branches,Branches Detail,Functions,Functions Detail,Lines,Lines Detail,Test Plan
+41.67,shorten-middle.ts,src/string/shorten-middle.ts,65.38%,17/26,41.67%,5/12,80%,4/5,64%,16/25,src/string/shorten-middle.test.ts
+100,boolean.ts,src/boolean/boolean.ts,100%,4/4,100%,2/2,100%,1/1,100%,4/4,src/boolean/boolean.test.ts
+100,shorten-left.ts,shorten-left.ts,100%,18/18,100%,10/10,100%,4/4,100%,17/17,src/string/shorten-left.test.ts
+100,shorten.ts,shorten.ts,100%,19/19,100%,10/10,100%,4/4,100%,18/18,src/string/shorten.test.ts
+100,throwInvalid.ts,src/throwInvalid.ts,100%,7/7,100%,6/6,100%,1/1,100%,7/7,src/test/throwInvalid.test.ts
