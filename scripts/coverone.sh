@@ -49,9 +49,9 @@ if [ ! -z $USAGE ]; then
 	echo "
 Gather coverage results for a single module from a single test plan run.
 
---list list all the test plans found.
---all  run all test plans one after the other combining results.
---help display detailed command help and how to configure to your use.
+	--list list all the test plans found.
+	--all  run all test plans one after the other combining results.
+	--help display detailed command help and how to configure to your use.
 
 Run a single unit test plan and gather coverage results for the associated module. This can help ensure that a module is fully covered by actual tests instead of as a side effect of running other code.
 
@@ -61,54 +61,60 @@ The associated module for a test plan will be determined by replacing the $TEST_
 
 For example:
 
-src/path/dummy$TEST_SUFF1 => src/path/dummy$CODE_EXT
-src/path/tests/dummy$TEST_SUFF1 => src/path/dummy$CODE_EXT
-test/path/dummy$TEST_SUFF1 => src/path/dummy$CODE_EXT
+	src/path/dummy$TEST_SUFF1 => src/path/dummy$CODE_EXT
+	src/path/tests/dummy$TEST_SUFF1 => src/path/dummy$CODE_EXT
+	test/path/dummy$TEST_SUFF1 => src/path/dummy$CODE_EXT
 
 If all else fails, you can configure which modules are covered by which test plans by listing an entry in $COV_CFG of the form:
 
-test/plan$TEST_SUFF1 src/file$CODE_EXT ...
-
+test/plan$TEST_SUFF1 src/file$CODE_EXT
 "
 	if [ $USAGE == 2 ]; then
 		echo "
 Configuration:
 
-Works with istanbul versions: (may work with other versions)
-$IST_VER
-$IST_REP_VER
+	Works with istanbul versions: (may work with other versions)
+		$IST_VER
+		$IST_REP_VER
 
-Test plan suffixes supported:
-*$TEST_SUFF1 *$TEST_SUFF2 *$TEST_SUFF3
+	Test plan suffixes supported:
+		*$TEST_SUFF1 *$TEST_SUFF2 *$TEST_SUFF3
 
-Source code glob:
-$SRC/**/*$CODE_EXT
+	Source code glob:
+		$SRC/**/*$CODE_EXT
 
-Test plan glob:
-$TESTS/**/*{$TEST_SUFF1,$TEST_SUFF2,$TEST_SUFF3}
+	Test plan glob:
+		$TESTS/**/*{$TEST_SUFF1,$TEST_SUFF2,$TEST_SUFF3}
 
-How your project must be set up to use this:
+	Manual configuration of which modules are covered by which tests in file:
+		$COV_CFG
 
-Command used to compile all code in prep for coverage:
-$NPM run precover
+How your npm package.json5? project must be set up to use this:
 
-Command used to run coverage for a single test plan:
-$NPM run cover:single -- $SRC/path/to/plan$TEST_SUFF1
+	Command used to compile all code in prep for coverage:
+		$NPM run precover
 
-Coverage output for source modules is assumed to be in:
-$COV_DIR/$SRC
+	Command used to run coverage for a single test plan:
+		$NPM run cover:single -- $SRC/path/to/plan$TEST_SUFF1
 
-Output from your project's cover command will be logged to:
-$COV_LOG
 
-Coverage stats from the output html will be recorded in:
-$COV_CSV
+Locations of coverage files read and written:
 
-And the output coverage html pages will be accumulated in:
-$COV_TAR
+	Coverage output for source modules is assumed to be in:
+		$COV_DIR
+		$COV_DIR/$SRC
 
-Manual configuration of which modules are covered by which tests in file:
-$COV_CFG
+	Output from your project's cover command will be logged to:
+		$COV_LOG
+
+	Coverage stats from the output html will be recorded in:
+		$COV_CSV
+
+	And the output coverage html pages will be accumulated in:
+		$COV_TAR
+
+	The final generated HTML page showing coverage by module:
+		$COV_INDEX
 "
 	fi
 	exit 0
