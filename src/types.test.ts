@@ -31,4 +31,4 @@ describe('first test suite', function() {
 	}
 }
 
-void TestPlan
+void TestPlan //tslint:disable-line:no-unused-expression
