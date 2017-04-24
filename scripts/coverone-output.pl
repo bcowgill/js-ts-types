@@ -9,7 +9,7 @@ use Data::Dumper;
 
 my $DEBUG = 0;
 my $template_file = $0;
-$template_file =~ s{ / [^/]+ \z }{/coverage-index.html}xmsg;
+$template_file =~ s{ / [^/]+ \z }{/coverone-index.html}xmsg;
 my $rTemplate = read_file($template_file, scalar_ref => 1);
 my $row_template = pull_row_template($template_file, $rTemplate);
 print "Template: $template_file\n$row_template" if $DEBUG;
