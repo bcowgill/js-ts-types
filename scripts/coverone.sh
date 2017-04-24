@@ -30,6 +30,7 @@ COV_LOG=coverone.log
 
 COV_INDEX=$COV_DIR/index.html
 COV_SCRAPE=`dirname $0`/coverone-scrape.pl
+COV_OUTPUT=`dirname $0`/coverone-output.pl
 
 #===========================================================================
 USAGE=
@@ -190,6 +191,9 @@ function cover_single {
 
 function cover_summary {
 	echo TODO Summary not implemented yet...
+	tar xvf $COV_TAR
+	$COV_OUTPUT $COV_CSV > $COV_INDEX
+	tar rf $COV_TAR $COV_INDEX $COV_CSV
 }
 
 PLANS=$(get_test_plans)
@@ -221,13 +225,10 @@ fi
 #===========================================================================
 # cover all test plans
 if [ $TEST_PLAN == "--all" ]; then
-	echo --all NOT SUPPORTED YET
 	cover_start
 	for plan in $PLANS; do
 		echo "$plan"
 		$0 "$plan"
-#			| egrep -A 6 -i 'Covering Single|Coverage summary' \
-#			| egrep -v '^(--|>)' \
 	done
 	cover_summary
 	exit 0
