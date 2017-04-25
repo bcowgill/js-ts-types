@@ -14,7 +14,7 @@ Tooled with tslint + mocha + chai + istanbul + json5.
 Because `json5` files are used for configuration you must globally install `npm-json5`.  You may also want to define a shell alias of `npm5` to `npm-json5`. Apart from that you simply switch to using `npm5` command instead of `npm` when performing normal `npm` actions.
 
 ```bash
-npm install --global npm-json5
+npm install --global npm-json5 json5
 alias npm5='npm-json5'  # may want to add to your shell startup scripts
 npm5 install
 npm5 run build
@@ -75,6 +75,11 @@ npm5 run test:single:repl -- ./dist/plan.test.js
 npm5 run test:single:debug -- ./dist/plan.test.js
 ```
 
+Tslint doesn't like debugger statements so you have to override it. Be careful not to commit like this.
+
+```typescript
+debugger; // tslint:disable-line:no-debugger
+```
 
 ##### Test Coverage
 We use istanbul to check for code coverage when the tests run and fail the build unless our coverage thresholds are met.  To drill down into coverage detail open the file `coverage/lcov-report/index.html` in your browser.
@@ -84,7 +89,7 @@ npm5 run cover
 npm5 run coveralls  # to check the thresholds
 ```
 
-Ideally one test plan will cover one module to 100%. To run coverage for a single test plan you can specify it on the command line.  You have to have used the `compile:cover` target previously.
+Ideally one test plan will cover one module to 100%.  To run coverage for a single test plan you can specify it on the command line.  You have to have used the `compile:cover` target previously.
 
 ```bash
 npm5 run compile:cover  # once to instrument all the code
@@ -115,6 +120,8 @@ Because compiling for coverage leaves comments in the code so that `/*istanbul i
 ```bash
 npm5 run build
 ```
+
+In some situations you may need to convert to a `package.json` and run normal npm commands.  There is a script `scripts/de-json5.sh` which will do the conversion.
 
 ### Author
 ```
