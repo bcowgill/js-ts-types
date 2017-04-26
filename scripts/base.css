@@ -5,7 +5,8 @@ body, html {
 body {
     font-family: Helvetica Neue, Helvetica, Arial;
     font-size: 14px;
-    color:#333;
+    color:#787878;
+    background:#000;
 }
 .small { font-size: 12px; }
 *, *:after, *:before {
@@ -23,7 +24,7 @@ pre {
     -o-tab-size:  2;
     tab-size: 2;
 }
-a { color:#0074D9; text-decoration:none; }
+a { color:#0074d9; text-decoration:none; }
 a:hover { text-decoration:underline; }
 .strong { font-weight: bold; }
 .space-top1 { padding: 10px 0 0 0; }
@@ -51,7 +52,7 @@ a:hover { text-decoration:underline; }
 
 .quiet {
   color: #7f7f7f;
-  color: rgba(0,0,0,0.5);
+  color: rgba(255, 255, 255,0.5);
 }
 .quiet a { opacity: 0.7; }
 
@@ -59,13 +60,13 @@ a:hover { text-decoration:underline; }
   font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
   font-size: 10px;
   color: #555;
-  background: #E8E8E8;
+  background: #e8e8e8;
   padding: 4px 5px;
   border-radius: 3px;
   vertical-align: middle;
 }
 
-div.path a:link, div.path a:visited { color: #333; }
+div.path a:link, div.path a:visited { color: #787878; }
 table.coverage {
   border-collapse: collapse;
   margin: 10px 0 0 0;
@@ -98,7 +99,7 @@ table.coverage td span.cline-any {
     border-radius: 3px;
     position: relative;
     padding: 0 4px;
-    background: #333;
+    background: #787878;
     color: yellow;
 }
 
@@ -108,7 +109,7 @@ table.coverage td span.cline-any {
     position: relative;
     padding: 0 4px;
     background: #ccc;
-    color: white;
+    color: #000;
 }
 .missing-if-branch .typ, .skip-if-branch .typ {
     color: inherit !important;
@@ -153,14 +154,14 @@ table.coverage td span.cline-any {
 }
 .status-line {  height: 10px; }
 /* dark red */
-.red.solid, .status-line.low, .low .cover-fill { background:#C21F39 }
-.low .chart { border:1px solid #C21F39 }
+.red.solid, .status-line.low, .low .cover-fill { background:#c21f39 }
+.low .chart { border:1px solid #c21f39 }
 /* medium red */
-.cstat-no, .fstat-no, .cbranch-no, .cbranch-no { background:#F6C6CE }
+.cstat-no, .fstat-no, .cbranch-no, .cbranch-no { background:#470b15 }
 /* light red */
-.low, .cline-no { background:#FCE1E5 }
+.low, .cline-no { background:#031e1a }
 /* light green */
-.high, .cline-yes { background:rgb(230,245,208) }
+.high, .cline-yes { background:rgb(31,12,59) }
 /* medium green */
 .cstat-yes { background:rgb(161,215,106) }
 /* dark green */
@@ -177,8 +178,8 @@ table.coverage td span.cline-any {
 .fstat-skip { background: #ddd; color: #111 !important; }
 .cbranch-skip { background: #ddd !important; color: #111; }
 
-span.cline-neutral { background: #eaeaea; }
-.medium { background: #eaeaea; }
+span.cline-neutral { background: #151515; }
+.medium { background: #151515; }
 
 .cover-fill, .cover-empty {
   display:inline-block;
@@ -188,7 +189,7 @@ span.cline-neutral { background: #eaeaea; }
   line-height: 0;
 }
 .cover-empty {
-    background: white;
+    background: #000;
 }
 .cover-full {
     border-right: none !important;
