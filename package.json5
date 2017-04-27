@@ -1,7 +1,7 @@
 {
 	"name": "js-ts-types",
 	"version": "1.0.0",
-	"description": "Javascript plus Typescript type checking library (tooling: mocha, chai, json5)",
+	"description": "Javascript plus Typescript type checking library (tooling: typescript, tslint, mocha, chai, istanbul, json5)",
 	"main": "./dist/index.js",
 	"repository": {
 		"type": "git",
@@ -12,7 +12,7 @@
 		"json5": "json5 -c *.json5",// && ./scripts/entab-json.sh", // generate package.json from package.json5 not really necessary
 
 		// adding new modules and mainting the shrinkwrap
-		"addmodule": "npm install --save",
+		"addmodule": "npm-json5 install --save",
 		"adddevmodule": "npm-json5 install --save-dev",
 		"postaddmodule": "npm-json5 shrinkwrap",
 		"postadddevmodule": "npm-json5 run postaddmodule",
@@ -118,7 +118,7 @@
 	"keywords": [
 		"type-checking",
 		"validation",
-		"typescript-mocha-chai-json5",
+		"typescript-tslint-mocha-chai-istanbul-json5",
 		"i18n"
 	],
 	"engines": {
@@ -133,23 +133,23 @@
 	"devDependencies": {
 		"@types/chai": "^3.5.0",
 		"@types/chai-as-promised": "0.0.30",
-		"@types/istanbul": "^0.4.29",        // code coverage tool
-		"@types/mocha": "^2.2.40",        // mocha unit test runner
+		"@types/istanbul": "^0.4.29",
+		"@types/mocha": "^2.2.40",
 		"@types/promisify-node": "^0.4.0",
 		"@types/q": "^1.0.0",
 		"@types/sinon": "^2.1.2",
 		"json5": "^0.5.1",      // to convert package.json5 to package.json
 		"npm-json5": "^0.1.4",  // provides npm5 command so that package.json doesn't need to be generated
 		"chai": "^3.5.0",         // chai assertion library for unit testing
-		"chai-as-promised": "^6.0.0",
-		"chai-sinon": "^2.8.1",
-		"istanbul": "1.1.0-alpha.1",
-		"mocha": "^3.2.0",
+		"chai-as-promised": "^6.0.0",  // chai assertions for promises
+		"chai-sinon": "^2.8.1",  // chai integration with sinon stub/spy/mock library
+		"istanbul": "1.1.0-alpha.1",        // code coverage tool
+		"mocha": "^3.2.0",        // mocha unit test runner
 		"mocha-typescript": "^1.0.23",
-		"sinon": "^2.1.0",
+		"sinon": "^2.1.0",   // test assertion library for stub/spy/mocks
 		"sinon-test": "^1.0.1",
-		"ts-node": "^3.0.2",
-		"tslint": "^5.1.0",
+		"ts-node": "^3.0.2",   // typescript for node
+		"tslint": "^5.1.0",   // typescript linting tool
 		"typescript": "^2.3.0",   // to convert typescript .ts files to .js
 	},
 }

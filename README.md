@@ -29,7 +29,7 @@ npm5 run json5
 The build is configured as simple `npm` run scripts within the `package5.json`.
 
 #### NPM shrinkwrap
-In order to freeze the project dependencies to have reliable builds we use `npm5 shrinkwrap`. Whenever you install a new module dependency you need to run `npm5 shrinkwrap` afterward. There are two convenience build targets for this.
+In order to freeze the project dependencies to have reliable builds we use `npm5 shrinkwrap`.  Whenever you install a new module dependency you need to run `npm5 shrinkwrap` afterward.  There are two convenience build targets for this.
 ```bash
 npm5 run addmodule -- some-module@version
 npm5 run adddevmodule -- some-module@version
